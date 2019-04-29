@@ -4,7 +4,7 @@ defmodule LiveChatWeb.Live.Index do
   alias LiveChat.Chat
   alias LiveChat.Chat.Message
 
-  def mount(_session, arg1) do
+  def mount(_session, socket) do
     if connected?(socket), do: Chat.subscribe()
     {:ok, fetch(socket)}
   end
@@ -40,7 +40,6 @@ defmodule LiveChatWeb.Live.Index do
     end
   end
 
-  # updating web socket on type
   def handle_info({Chat, [:message, _event_type], _message}, socket) do
     {:noreply, fetch(socket, get_user_name(socket))}
   end
